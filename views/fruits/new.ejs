@@ -10,6 +10,11 @@
   <body>
     <h1>Create a New Fruit!</h1>
     <form action="/fruits" method="POST">
+<!-- 'action' specifies where the form data should be sent when 
+ submitted.
+'method' defines the HTTP method the browser should used to send the
+form data. Here we use POST, appropriate because this form creates new 
+data to the server. -->
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" />
 
@@ -18,5 +23,8 @@
 
         <button type="submit">Add Fruit</button>
     </form>
+    
+    <a href="/fruits/">Back to Fruits</a>
+
   </body>
 </html>
