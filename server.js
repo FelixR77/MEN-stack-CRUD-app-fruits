@@ -9,6 +9,9 @@ const express = require('express');
 const mongoose = require('mongoose'); 
 //mongoose helps the application connect to a database
 
+const methodOverride = require('method-override');
+const morgan = require('morgan'); 
+
 const app = express();
 
 mongoose.connect(process.env.MONGODB_URI); 
@@ -29,6 +32,9 @@ app.use(express.urlencoded({extended: false }));
 // extracting form data and converting it into a JS object. It then 
 // attaches the object to 'req.body' property of the request, making 
 // the form data accessible within the route handlers. 
+
+app.use(methodOverride('_method'));  //learn more used in Delete Route
+app.use(morgan('dev'));              //learn more used in Delete Route
 
 // GET / 
 app.get('/', async (req, res) => {
@@ -70,6 +76,12 @@ app.post('/fruits', async (req, res) => {
 // uses the object, req.body, created with the express.urlencoded 
 //method to manupulate the user input (like converting "on" to true)
 
+app.delete('/fruits/:fruitId', async (req, res) => {
+    await Fruit.findByIdAndDelete(req.params.fruitId);
+    res.redirect('/fruits'); 
+    // res.redirect used when you want to go to a different page after
+    // an action, like saving or deleting. 
+});
 
 
 app.listen(3000, () => {
